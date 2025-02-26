@@ -18,12 +18,9 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")
 # target_metadata = mymodel.Base.metadata
 
 from app.db.base import Base
-from app.db.models.users import User
-from app.db.models.books import Book
-from app.db.models.comments import Comment
-from app.db.models.reviews import Review
-
+from app.db.models import users, books, reviews, comments
 from app.core.config import settings
+
 
 config = context.config
 config.set_main_option("sqlalchemy.url", (settings.SQLALCHEMY_DATABASE_URI).replace("asyncpg", "psycopg"))
