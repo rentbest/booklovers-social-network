@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 
 from app.db.base import Base
 
+
 class Book(Base):
     __tablename__ = "books"
 

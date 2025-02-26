@@ -37,7 +37,7 @@ async def update_book_by_id(db: AsyncSession, id: int, **params):
             status_code=400,
             detail="At least one parameter must be provided to update book",
         )
-    
+
     book_to_update = await db.execute(select(Book).where(Book.id == id))
     book_to_update = book_to_update.scalars().first()
 
@@ -46,7 +46,7 @@ async def update_book_by_id(db: AsyncSession, id: int, **params):
             status_code=404,
             detail="Book not found",
         )
-    
+
     for key, value in params.items():
         if value:
             setattr(book_to_update, key, value)
