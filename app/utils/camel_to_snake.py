@@ -6,4 +6,6 @@ def camel_case_to_snake_case(camel_word: str) -> str:
             snake_word.append("_")
         start = False
         snake_word.append(el.lower())
+    if snake_word and snake_word[-1] != "s":
+        snake_word.append("s")
     return ''.join(snake_word)
