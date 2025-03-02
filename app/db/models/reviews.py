@@ -4,9 +4,6 @@ from app.db.base import Base
 
 
 class Review(Base):
-    __tablename__ = "reviews"
-
-    id = Column(Integer, primary_key=True, index=True)
     rating = Column(Integer, nullable=False)
     text = Column(Text, nullable=True)
     user_id = Column(Integer, ForeignKey("users.id"))
