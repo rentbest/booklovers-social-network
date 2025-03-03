@@ -6,10 +6,10 @@ from app.db.session import get_session
 from app.schemas.books import Book, BookCreate, BookFilter
 from app.crud import books
 
-router = APIRouter(tags=["Books"])
+router = APIRouter(prefix="/books", tags=["Books"])
 
 
-@router.get("/books/", response_model=List[Book], response_description="List of books filtered by parameters")
+@router.get("/", response_model=List[Book], response_description="List of books filtered by parameters")
 async def read_books(
     db: AsyncSession = Depends(get_session),
     filter: BookFilter = Depends(),
@@ -25,7 +25,7 @@ async def read_books(
     return await books.get_books(db=db, **filter.model_dump(exclude_unset=True))
 
 
-@router.post("/books/", response_model=Book, response_description="The newly created book")
+@router.post("/", response_model=Book, response_description="The newly created book")
 async def create_new_book(book: BookCreate, db: AsyncSession = Depends(get_session)):
     """
     Create a new book entry.
@@ -35,7 +35,7 @@ async def create_new_book(book: BookCreate, db: AsyncSession = Depends(get_sessi
     return await books.create_book(db, book=book)
 
 
-@router.put(("/books/{id}/"), response_model=Book, response_description="The updated book")
+@router.put(("/{id}/"), response_model=Book, response_description="The updated book")
 async def update_book(
     id: int,
     db: AsyncSession = Depends(get_session),
@@ -50,7 +50,7 @@ async def update_book(
     return await books.update_book_by_id(db=db, id=id, **new_attrs.model_dump(exclude_unset=True))
 
 
-@router.delete("/books/", response_model=List[Book], response_description="List of deleted books")
+@router.delete("/", response_model=List[Book], response_description="List of deleted books")
 async def delete_books(
     db: AsyncSession = Depends(get_session),
     filter: BookFilter = Depends(),
