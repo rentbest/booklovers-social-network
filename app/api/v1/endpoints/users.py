@@ -1,44 +1,13 @@
-from fastapi import APIRouter, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from fastapi import APIRouter
+from fastapi_users import FastAPIUsers
 
-from app.db.session import get_session
 from app.db.models.users import User
+from app.user_manager.user_manager import get_user_manager
+from app.schemas.users import UserRead, UserUpdate
+from app.auth.auth_backend import auth_backend
 
 
-router = APIRouter(prefix="/users", tags=["Users"])
+fastapi_users = FastAPIUsers[User, int](get_user_manager, [auth_backend])
 
-# Только для админов
-@router.get("/")
-async def read_users(
-    db: AsyncSession = Depends(get_session),
-):
-    query = select(User)
-
-    result = await db.execute(query)
-    return result.scalars().all()
-
-
-@router.post("/register/")
-def login():
-    pass
-
-
-@router.post("/login/")
-def login():
-    pass
-
-
-@router.get("/me/")
-def protected():
-    pass
-
-
-@router.get("/me/change-password")
-def protected():
-    pass
-
-
-@router.delete("/me/")
-def protected():
-    pass
+user_router = APIRouter(prefix="/users", tags=["Users"])
+user_router.include_router(fastapi_users.get_users_router(UserRead, UserUpdate))

@@ -1,17 +1,10 @@
-from typing import TYPE_CHECKING
-from sqlalchemy import Column, String
-from fastapi_users.db import SQLAlchemyBaseOAuthAccountTable, SQLAlchemyUserDatabase
-
+from sqlalchemy import Column, String, Boolean
+from fastapi_users.db import SQLAlchemyBaseUserTable
 from app.db.base import Base
 
-if TYPE_CHECKING:
-    from sqlalchemy.ext.asyncio import AsyncSession
 
-
-class User(Base, SQLAlchemyBaseOAuthAccountTable[int]):
+class User(Base, SQLAlchemyBaseUserTable[int]):
     username = Column(String, unique=True, nullable=False)
-    email = Column(String, unique=True, nullable=False)
-
-    @classmethod
-    def get_db(cls, session: "AsyncSession"):
-        return SQLAlchemyUserDatabase(session, User)
+    is_admin = Column(Boolean, default=False)
+    email = Column(String, unique=True, nullable=False) 
+    hashed_password = Column(String, nullable=False)

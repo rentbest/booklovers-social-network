@@ -15,10 +15,14 @@ class Settings(BaseSettings):
     )
 
     POSTGRES_SERVER: str
-    POSTGRES_PORT: int = 5432
+    POSTGRES_PORT: int
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str
+
+    PRIVATE_KEY: str
+    PUBLIC_KEY: str
+    SECRET: str
 
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> PostgresDsn:
