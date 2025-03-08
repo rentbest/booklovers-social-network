@@ -1,6 +1,7 @@
 from pydantic import PostgresDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from dotenv import load_dotenv
+import os
 
 
 # Загружаем переменные из .env
@@ -20,8 +21,8 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str
 
-    PRIVATE_KEY: str
-    PUBLIC_KEY: str
+    PRIVATE_KEY: str = os.getenv("PRIVATE_KEY", "").replace("\\n", "\n")
+    PUBLIC_KEY: str = os.getenv("PUBLIC_KEY", "").replace("\\n", "\n")
     SECRET: str
 
     @property
