@@ -9,15 +9,15 @@ repos:
       - id: check-yaml
         args:
           - --unsafe
-      - id: end-of-file-fixer
-      - id: trailing-whitespace
+      - id: end-of-file-fixer  # Автоматически добавляет перенос строки в конце файлов
+      - id: trailing-whitespace  # Удаляет лишние пробелы в конце строк
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: v0.2.2
     hooks:
       - id: ruff
         args:
-          - --fix
-      - id: ruff-format
+          - --fix  # Автоматически исправляет ошибки, если это возможно
+      - id: ruff-format  # Форматирует код с помощью ruff
 
 ci:
   autofix_commit_msg: 🎨 [pre-commit.ci] Auto format from pre-commit.com hooks
