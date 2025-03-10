@@ -7,3 +7,6 @@ __pycache__
 
 # ruff (Python linter) cache
 .ruff_cache
+
+# Alembic versions
+versions
